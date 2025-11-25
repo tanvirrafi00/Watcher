@@ -1,12 +1,12 @@
-# Proxy Server Extension
+# Watcher - Proxy Server Extension
 
 A Chrome browser extension for comprehensive network traffic monitoring, modification, and analysis.
 
 ## Features
 
 - 🔍 Real-time HTTP/HTTPS request interception and logging
-- 🛠️ Dynamic traffic modification with custom rules
-- 📡 WebSocket connection monitoring
+- �️ eDynamic traffic modification with custom rules
+- �  WebSocket connection monitoring
 - 🎯 Advanced filtering and search capabilities
 - 💾 Traffic data persistence and export (JSON/HAR formats)
 - 🎨 React-based user interface

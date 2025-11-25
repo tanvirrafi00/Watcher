@@ -36,7 +36,7 @@
   - **Property 25: Quota management**
   - **Validates: Requirements 8.3**
 
-- [ ] 4. Implement Request Logger
+- [x] 4. Implement Request Logger
   - Create RequestLogger class for managing traffic logs
   - Implement logRequest method to store captured requests
   - Implement updateRequestWithResponse to add response data
@@ -46,11 +46,11 @@
   - Implement retention policy cleanup (delete old data)
   - _Requirements: 1.4, 8.1, 8.4, 8.5_
 
-- [ ] 4.1 Write property test for data clearing
+- [x] 4.1 Write property test for data clearing
   - **Property 26: Data clearing completeness**
   - **Validates: Requirements 8.4**
 
-- [ ] 4.2 Write property test for retention policy
+- [x] 4.2 Write property test for retention policy
   - **Property 27: Retention policy enforcement**
   - **Validates: Requirements 8.5**
 

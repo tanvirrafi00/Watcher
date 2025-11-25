@@ -20,7 +20,7 @@
   - **Property 1: Complete request capture**
   - **Validates: Requirements 1.1, 1.2, 1.3, 1.4, 1.5**
 
-- [ ] 3. Implement Storage Manager
+- [x] 3. Implement Storage Manager
   - Create StorageManager class with chrome.storage.local wrapper
   - Implement save, get, remove operations with error handling
   - Add quota monitoring and reporting
@@ -28,11 +28,11 @@
   - Add data compression for large payloads
   - _Requirements: 8.1, 8.3_
 
-- [ ] 3.1 Write property test for storage persistence
+- [x] 3.1 Write property test for storage persistence
   - **Property 24: Storage persistence**
   - **Validates: Requirements 8.1, 8.2**
 
-- [ ] 3.2 Write property test for quota management
+- [x] 3.2 Write property test for quota management
   - **Property 25: Quota management**
   - **Validates: Requirements 8.3**
 

@@ -9,14 +9,14 @@
   - Set up build scripts for development and production
   - _Requirements: All_
 
-- [ ] 2. Implement core data models and types
+- [x] 2. Implement core data models and types
   - Create TypeScript interfaces for RequestLog, Rule, RuleAction, WebSocketLog, LogFilter
   - Define Chrome API type extensions
   - Create utility types for request/response data
   - Implement data validation functions
   - _Requirements: 1.1, 1.2, 1.3, 1.4, 1.5_
 
-- [ ] 2.1 Write property test for data model validation
+- [x] 2.1 Write property test for data model validation
   - **Property 1: Complete request capture**
   - **Validates: Requirements 1.1, 1.2, 1.3, 1.4, 1.5**
 

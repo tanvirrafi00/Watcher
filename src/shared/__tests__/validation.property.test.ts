@@ -26,7 +26,7 @@ describe('Property 1: Complete request capture - Data Model Validation', () => {
                 fc.property(
                     fc.string({ minLength: 1, maxLength: 100 }).filter(s => s.trim().length > 0),
                     fc.string({ minLength: 1, maxLength: 200 }).filter(s => s.trim().length > 0),
-                    fc.constantFrom('glob', 'regex'),
+                    fc.constantFrom('glob' as const, 'regex' as const),
                     fc.integer({ min: 0, max: 100 }),
                     (name, urlPattern, matchType, priority) => {
                         const rule: Partial<Rule> = {
@@ -118,9 +118,9 @@ describe('Property 1: Complete request capture - Data Model Validation', () => {
         test('should accept valid modifyHeaders actions', () => {
             fc.assert(
                 fc.property(
-                    fc.string({ minLength: 1, maxLength: 50 }),
-                    fc.string({ minLength: 1, maxLength: 100 }),
-                    fc.constantFrom('add', 'remove', 'set'),
+                    fc.string({ minLength: 1, maxLength: 50 }).filter(s => s.trim().length > 0),
+                    fc.string({ minLength: 1, maxLength: 100 }).filter(s => s.trim().length > 0),
+                    fc.constantFrom('add' as const, 'remove' as const, 'set' as const),
                     (headerName, headerValue, operation) => {
                         const action: RuleAction = {
                             type: 'modifyHeaders',
@@ -283,8 +283,8 @@ describe('Property 1: Complete request capture - Data Model Validation', () => {
         test('should accept valid conditions', () => {
             fc.assert(
                 fc.property(
-                    fc.constantFrom('method', 'resourceType', 'header'),
-                    fc.constantFrom('equals', 'contains', 'regex'),
+                    fc.constantFrom('method' as const, 'resourceType' as const, 'header' as const),
+                    fc.constantFrom('equals' as const, 'contains' as const, 'regex' as const),
                     fc.string({ minLength: 1 }),
                     (type, operator, value) => {
                         const condition: RuleCondition = {
@@ -304,8 +304,8 @@ describe('Property 1: Complete request capture - Data Model Validation', () => {
         test('should reject conditions with empty values', () => {
             fc.assert(
                 fc.property(
-                    fc.constantFrom('method', 'resourceType', 'header'),
-                    fc.constantFrom('equals', 'contains', 'regex'),
+                    fc.constantFrom('method' as const, 'resourceType' as const, 'header' as const),
+                    fc.constantFrom('equals' as const, 'contains' as const, 'regex' as const),
                     (type, operator) => {
                         const condition: RuleCondition = {
                             type,

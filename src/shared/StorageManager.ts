@@ -44,7 +44,7 @@ export class StorageManager {
         try {
             const result = await chrome.storage.local.get(key);
 
-            if (!result[key]) {
+            if (!(key in result)) {
                 return null;
             }
 

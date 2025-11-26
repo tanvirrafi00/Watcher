@@ -52,7 +52,7 @@ const AppContent: React.FC = () => {
 
     const filteredRequests = React.useMemo(() => {
         return filterLogs(tabFilteredRequests, filter);
-    }, [tabFilteredRequests, filter]);
+    }, [tabFilteredRequests, JSON.stringify(filter)]);
 
     // Filter WebSockets by active tab
     const tabFilteredWebSockets = React.useMemo(() => {

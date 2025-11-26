@@ -6,13 +6,14 @@ import FilterControls from './components/FilterControls';
 import RuleList from './components/RuleList';
 import WebSocketList from './components/WebSocketList';
 import WebSocketDetail from './components/WebSocketDetail';
+import Settings from './components/Settings';
 import ErrorBoundary from './components/ErrorBoundary';
 import { LogFilter } from '../shared/types';
 import { filterLogs, calculateBandwidth, formatBytes } from '../shared/utils';
 import { ExportManager, ExportFormat } from '../shared/ExportManager';
 import './App.css';
 
-type ViewMode = 'requests' | 'rules' | 'websockets';
+type ViewMode = 'requests' | 'rules' | 'websockets' | 'settings';
 
 const AppContent: React.FC = () => {
     const {
@@ -146,6 +147,12 @@ const AppContent: React.FC = () => {
                 >
                     ⚙️ Rules
                 </button>
+                <button
+                    className={`nav-btn ${viewMode === 'settings' ? 'active' : ''}`}
+                    onClick={() => setViewMode('settings')}
+                >
+                    🔧 Settings
+                </button>
             </nav>
 
             <main className="app-main">
@@ -180,9 +187,13 @@ const AppContent: React.FC = () => {
                             <WebSocketDetail connection={selectedWebSocket} />
                         </div>
                     </div>
-                ) : (
+                ) : viewMode === 'rules' ? (
                     <div className="rules-view">
                         <RuleList rules={rules} onRulesChange={refreshRules} />
+                    </div>
+                ) : (
+                    <div className="settings-view">
+                        <Settings />
                     </div>
                 )}
             </main>

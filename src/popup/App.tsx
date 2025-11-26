@@ -8,6 +8,7 @@ import WebSocketList from './components/WebSocketList';
 import WebSocketDetail from './components/WebSocketDetail';
 import { LogFilter } from '../shared/types';
 import { filterLogs, calculateBandwidth, formatBytes } from '../shared/utils';
+import { ExportManager, ExportFormat } from '../shared/ExportManager';
 import './App.css';
 
 type ViewMode = 'requests' | 'rules' | 'websockets';
@@ -61,6 +62,25 @@ const AppContent: React.FC = () => {
         setFilter({});
     };
 
+    const handleExport = (format: ExportFormat) => {
+        const exportManager = new ExportManager();
+        const logsToExport = viewMode === 'requests' ? filteredRequests : [];
+
+        if (logsToExport.length === 0) {
+            alert('No data to export');
+            return;
+        }
+
+        try {
+            const content = exportManager.exportLogs(logsToExport, format);
+            const filename = exportManager.generateFilename(format);
+            exportManager.downloadFile(content, filename);
+        } catch (error) {
+            console.error('Export failed:', error);
+            alert('Export failed. Please try again.');
+        }
+    };
+
     return (
         <div className="app-container">
             <header className="app-header">
@@ -85,6 +105,24 @@ const AppContent: React.FC = () => {
                     >
                         {showAllTabs ? '📑 All Tabs' : '📄 Current Tab'}
                     </button>
+                    {viewMode === 'requests' && filteredRequests.length > 0 && (
+                        <div className="export-buttons">
+                            <button
+                                className="export-btn"
+                                onClick={() => handleExport('json')}
+                                title="Export as JSON"
+                            >
+                                📥 JSON
+                            </button>
+                            <button
+                                className="export-btn"
+                                onClick={() => handleExport('har')}
+                                title="Export as HAR"
+                            >
+                                📥 HAR
+                            </button>
+                        </div>
+                    )}
                 </div>
             </header>
 

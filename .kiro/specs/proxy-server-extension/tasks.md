@@ -284,7 +284,7 @@
   - **Property 22: WebSocket message history**
   - **Validates: Requirements 7.4**
 
-- [ ] 21. Implement Export functionality
+- [x] 21. Implement Export functionality
   - Create ExportManager utility class
   - Implement JSON export format
   - Implement HAR (HTTP Archive) export format
@@ -293,15 +293,15 @@
   - Trigger browser download with generated file
   - _Requirements: 10.1, 10.2, 10.3, 10.4, 10.5_
 
-- [ ] 21.1 Write property test for export completeness
+- [x] 21.1 Write property test for export completeness
   - **Property 30: Export completeness**
   - **Validates: Requirements 10.1, 10.2**
 
-- [ ] 21.2 Write property test for filtered export
+- [x] 21.2 Write property test for filtered export
   - **Property 31: Filtered export accuracy**
   - **Validates: Requirements 10.3**
 
-- [ ] 21.3 Write property test for export format support
+- [x] 21.3 Write property test for export format support
   - **Property 32: Export format support**
   - **Validates: Requirements 10.4**
 

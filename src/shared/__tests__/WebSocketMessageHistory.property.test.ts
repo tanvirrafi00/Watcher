@@ -2,7 +2,7 @@
 // Property-based tests for WebSocket message history display
 
 import fc from 'fast-check';
-import { WebSocketLog, WebSocketMessage } from '../types';
+import { WebSocketLog } from '../types';
 
 describe('WebSocket Message History Property Tests', () => {
     const testConfig = {

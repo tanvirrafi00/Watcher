@@ -344,10 +344,10 @@
   - Add content security policy
   - _Requirements: All_
 
-- [-] 26. Final Checkpoint - Ensure all tests pass
+- [x] 26. Final Checkpoint - Ensure all tests pass
   - Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 27. Build and package extension
+- [x] 27. Build and package extension
   - Create production build script
   - Minify and optimize code
   - Generate source maps

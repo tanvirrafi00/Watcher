@@ -5,7 +5,6 @@
 
 import fc from 'fast-check';
 import { ExportManager } from '../ExportManager';
-import { RequestLog } from '../types';
 
 describe('Export Manager Property Tests', () => {
     const testConfig = {

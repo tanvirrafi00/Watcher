@@ -305,7 +305,7 @@
   - **Property 32: Export format support**
   - **Validates: Requirements 10.4**
 
-- [ ] 22. Implement error handling and notifications
+- [x] 22. Implement error handling and notifications
   - Create error notification component
   - Add error boundary for React components
   - Implement error logging to extension console
@@ -313,7 +313,7 @@
   - Add error recovery mechanisms
   - _Requirements: 9.1, 9.2, 9.3, 9.4, 9.5_
 
-- [ ] 22.1 Write property test for error logging
+- [x] 22.1 Write property test for error logging
   - **Property 29: Error logging completeness**
   - **Validates: Requirements 9.5**
 

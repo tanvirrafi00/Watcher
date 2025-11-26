@@ -6,6 +6,7 @@ import FilterControls from './components/FilterControls';
 import RuleList from './components/RuleList';
 import WebSocketList from './components/WebSocketList';
 import WebSocketDetail from './components/WebSocketDetail';
+import ErrorBoundary from './components/ErrorBoundary';
 import { LogFilter } from '../shared/types';
 import { filterLogs, calculateBandwidth, formatBytes } from '../shared/utils';
 import { ExportManager, ExportFormat } from '../shared/ExportManager';
@@ -191,9 +192,11 @@ const AppContent: React.FC = () => {
 
 const App: React.FC = () => {
     return (
-        <AppProvider>
-            <AppContent />
-        </AppProvider>
+        <ErrorBoundary>
+            <AppProvider>
+                <AppContent />
+            </AppProvider>
+        </ErrorBoundary>
     );
 };
 

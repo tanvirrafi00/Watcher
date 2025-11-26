@@ -62,7 +62,7 @@ describe('Request Logger Property Tests', () => {
         });
 
         (global.chrome.storage.local.clear as jest.Mock) = jest.fn(() => {
-            mockStorage.clear();
+            Object.keys(mockStorage).forEach(key => delete mockStorage[key]);
             return Promise.resolve();
         });
 
@@ -84,7 +84,7 @@ describe('Request Logger Property Tests', () => {
                         { minLength: 1, maxLength: 20 }
                     ),
                     async (requests) => {
-                        mockStorage.clear();
+                        Object.keys(mockStorage).forEach(key => delete mockStorage[key]);
 
                         // Log all requests
                         for (const req of requests) {
@@ -134,7 +134,7 @@ describe('Request Logger Property Tests', () => {
                         { minLength: 1, maxLength: 10 }
                     ),
                     async (targetTabId, targetTabRequests, otherTabRequests) => {
-                        mockStorage.clear();
+                        Object.keys(mockStorage).forEach(key => delete mockStorage[key]);
                         const otherTabId = targetTabId + 1;
 
                         // Log requests for target tab
@@ -180,7 +180,7 @@ describe('Request Logger Property Tests', () => {
         });
 
         test('should handle clearing logs when no logs exist', async () => {
-            mockStorage.clear();
+            Object.keys(mockStorage).forEach(key => delete mockStorage[key]);
 
             // Clear all logs (should not throw)
             await requestLogger.clearLogs();
@@ -206,10 +206,14 @@ describe('Request Logger Property Tests', () => {
                     fc.integer({ min: 1, max: 5 }),
                     fc.integer({ min: 1, max: 5 }),
                     async (retentionDays, oldLogsCount, recentLogsCount) => {
-                        mockStorage.clear();
-                        const now = Date.now();
+                        // Clear mock storage
+                        Object.keys(mockStorage).forEach(key => delete mockStorage[key]);
+                        // Use a timestamp from 10 seconds ago to avoid timing issues with Date.now() in cleanOldData
+                        const now = Date.now() - 10000;
+                        // Make old logs clearly older than retention period
                         const oldTimestamp = now - (retentionDays + 1) * 24 * 60 * 60 * 1000;
-                        const recentTimestamp = now - (retentionDays - 1) * 24 * 60 * 60 * 1000;
+                        // Make recent logs clearly within retention period
+                        const recentTimestamp = now - Math.max(0, (retentionDays - 1)) * 24 * 60 * 60 * 1000;
 
                         // Log old requests
                         for (let i = 0; i < oldLogsCount; i++) {
@@ -262,8 +266,10 @@ describe('Request Logger Property Tests', () => {
                         { minLength: 1, maxLength: 10 }
                     ),
                     async (retentionDays, requests) => {
-                        mockStorage.clear();
-                        const now = Date.now();
+                        // Clear mock storage
+                        Object.keys(mockStorage).forEach(key => delete mockStorage[key]);
+                        // Use a timestamp from 1 second ago to avoid timing issues
+                        const now = Date.now() - 1000;
 
                         // Log requests within retention period
                         for (const req of requests) {
@@ -304,7 +310,7 @@ describe('Request Logger Property Tests', () => {
                         method: fc.constantFrom('GET', 'POST', 'PUT', 'DELETE', 'PATCH'),
                     }),
                     async (request) => {
-                        mockStorage.clear();
+                        Object.keys(mockStorage).forEach(key => delete mockStorage[key]);
 
                         const id = await requestLogger.logRequest({
                             tabId: request.tabId,
@@ -336,7 +342,7 @@ describe('Request Logger Property Tests', () => {
                     fc.webUrl(),
                     fc.integer({ min: 100, max: 599 }),
                     async (url, status) => {
-                        mockStorage.clear();
+                        Object.keys(mockStorage).forEach(key => delete mockStorage[key]);
 
                         const id = await requestLogger.logRequest({
                             tabId: 1,
@@ -369,7 +375,7 @@ describe('Request Logger Property Tests', () => {
                     fc.integer({ min: 1, max: 10 }),
                     fc.integer({ min: 1, max: 5 }),
                     async (targetTabId, logsCount) => {
-                        mockStorage.clear();
+                        Object.keys(mockStorage).forEach(key => delete mockStorage[key]);
                         const otherTabId = targetTabId + 1;
 
                         // Log requests for target tab

@@ -101,7 +101,7 @@
   - **Property 17: Mock response delay**
   - **Validates: Requirements 6.4**
 
-- [ ] 7. Implement Request Interceptor in Background Service Worker
+- [x] 7. Implement Request Interceptor in Background Service Worker
   - Create background service worker entry point
   - Register chrome.webRequest listeners (onBeforeRequest, onBeforeSendHeaders, onHeadersReceived, onCompleted, onErrorOccurred)
   - Implement request capture logic in onBeforeRequest
@@ -114,44 +114,44 @@
   - Integrate with TrafficModificationEngine to apply modifications
   - _Requirements: 1.1, 1.2, 1.3, 2.2, 2.3, 2.4, 9.1_
 
-- [ ] 7.1 Write property test for request failure logging
+- [x] 7.1 Write property test for request failure logging
   - **Property 28: Request failure logging**
   - **Validates: Requirements 9.1**
 
-- [ ] 7.2 Write property test for graceful error handling
+- [x] 7.2 Write property test for graceful error handling
   - **Property 14: Graceful error handling**
   - **Validates: Requirements 5.4, 9.2, 9.4**
 
-- [ ] 8. Implement declarativeNetRequest for mock responses
+- [x] 8. Implement declarativeNetRequest for mock responses
   - Create mock response rule converter (Rule → declarativeNetRequest rule)
   - Implement dynamic rule registration using chrome.declarativeNetRequest
   - Handle data URL generation for mock response bodies
   - Implement rule cleanup when mocks are disabled
   - _Requirements: 6.1, 6.2, 6.5_
 
-- [ ] 8.1 Write property test for mock response storage
+- [x] 8.1 Write property test for mock response storage
   - **Property 15: Mock response storage**
   - **Validates: Requirements 6.1**
 
-- [ ] 8.2 Write property test for mock rule disable
+- [x] 8.2 Write property test for mock rule disable
   - **Property 18: Mock rule disable restoration**
   - **Validates: Requirements 6.5**
 
-- [ ] 9. Implement rule update immediacy
+- [x] 9. Implement rule update immediacy
   - Add chrome.runtime.onMessage listener for rule updates
   - Implement immediate rule reload when rules change
   - Update webRequest listeners with new rules
   - Update declarativeNetRequest rules dynamically
   - _Requirements: 2.5, 5.5_
 
-- [ ] 9.1 Write property test for rule update immediacy
+- [x] 9.1 Write property test for rule update immediacy
   - **Property 4: Rule update immediacy**
   - **Validates: Requirements 2.5, 5.5**
 
-- [ ] 10. Checkpoint - Ensure all background service worker tests pass
+- [x] 10. Checkpoint - Ensure all background service worker tests pass
   - Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 11. Implement WebSocket monitoring in Content Script
+- [x] 11. Implement WebSocket monitoring in Content Script
   - Create content script entry point
   - Override native WebSocket constructor
   - Wrap WebSocket.send() to capture outgoing messages
@@ -162,19 +162,19 @@
   - Send captured data to background service worker via chrome.runtime.sendMessage
   - _Requirements: 7.1, 7.2, 7.5_
 
-- [ ] 11.1 Write property test for WebSocket handshake capture
+- [x] 11.1 Write property test for WebSocket handshake capture
   - **Property 19: WebSocket handshake capture**
   - **Validates: Requirements 7.1**
 
-- [ ] 11.2 Write property test for WebSocket message capture
+- [x] 11.2 Write property test for WebSocket message capture
   - **Property 20: WebSocket message capture**
   - **Validates: Requirements 7.2**
 
-- [ ] 11.3 Write property test for WebSocket closure logging
+- [x] 11.3 Write property test for WebSocket closure logging
   - **Property 23: WebSocket closure logging**
   - **Validates: Requirements 7.5**
 
-- [ ] 12. Set up React UI foundation
+- [x] 12. Set up React UI foundation
   - Create React app structure in src/popup
   - Set up React Context for global state management
   - Create main App component
@@ -183,7 +183,7 @@
   - Implement chrome.runtime.onMessage listener for real-time updates
   - _Requirements: 3.1, 3.2_
 
-- [ ] 13. Implement Request List component
+- [x] 13. Implement Request List component
   - Create RequestList component to display captured requests
   - Implement virtualized list for performance (react-window)
   - Display request URL, method, status, timing for each item
@@ -192,11 +192,11 @@
   - Add loading and empty states
   - _Requirements: 3.1, 3.2_
 
-- [ ] 13.1 Write property test for real-time UI updates
+- [x] 13.1 Write property test for real-time UI updates
   - **Property 5: Real-time UI updates**
   - **Validates: Requirements 3.1, 3.2**
 
-- [ ] 14. Implement Request Detail viewer
+- [x] 14. Implement Request Detail viewer
   - Create RequestDetail component for displaying full request/response data
   - Display request headers, body, and metadata
   - Display response headers, body, status, and timing
@@ -205,11 +205,11 @@
   - Implement collapsible sections for headers
   - _Requirements: 3.3_
 
-- [ ] 14.1 Write property test for request detail completeness
+- [x] 14.1 Write property test for request detail completeness
   - **Property 6: Request detail completeness**
   - **Validates: Requirements 3.3**
 
-- [ ] 15. Implement Filter Controls component
+- [x] 15. Implement Filter Controls component
   - Create FilterControls component with search input
   - Add domain filter dropdown
   - Add resource type filter (XHR, fetch, script, image, etc.)
@@ -219,11 +219,11 @@
   - Add clear filters button
   - _Requirements: 4.1, 4.2, 4.3, 4.4, 4.5_
 
-- [ ] 15.1 Write property test for comprehensive filtering
+- [x] 15.1 Write property test for comprehensive filtering
   - **Property 9: Comprehensive filtering**
   - **Validates: Requirements 4.1, 4.2, 4.3, 4.4**
 
-- [ ] 15.2 Write property test for filter reset
+- [x] 15.2 Write property test for filter reset
   - **Property 10: Filter reset completeness**
   - **Validates: Requirements 4.5**
 

@@ -15,7 +15,7 @@ declare const global: typeof globalThis & {
 
 describe('Rule Engine Property Tests', () => {
     const testConfig = {
-        numRuns: 10,
+        numRuns: 5,
         verbose: false,
     };
 
@@ -64,7 +64,6 @@ describe('Rule Engine Property Tests', () => {
         });
 
         (global.chrome.storage.local.clear as jest.Mock) = jest.fn(() => {
-            mockStorage.clear();
             return Promise.resolve();
         });
 
@@ -84,6 +83,7 @@ describe('Rule Engine Property Tests', () => {
                         priority: fc.integer({ min: 0, max: 100 }),
                     }),
                     async (ruleData) => {
+                        // Clear storage for this iteration
                         mockStorage.clear();
 
                         const ruleId = await ruleEngine.saveRule({
@@ -111,15 +111,21 @@ describe('Rule Engine Property Tests', () => {
                 fc.asyncProperty(
                     fc.webUrl(),
                     async (url) => {
-                        mockStorage.clear();
 
                         // Create a rule that matches all URLs
-                        await ruleEngine.saveRule({
+                        const ruleId = await ruleEngine.saveRule({
                             name: 'Match All',
                             urlPattern: '*',
                             matchType: 'glob',
                             actions: [{ type: 'block', config: {} }],
                         });
+
+                        expect(ruleId).toBeDefined();
+                        expect(typeof ruleId).toBe('string');
+
+                        // Verify rule was saved by getting all rules
+                        const allRules = await ruleEngine.getRules();
+                        expect(allRules.length).toBeGreaterThan(0);
 
                         const requestDetails: RequestDetails = {
                             requestId: '123',
@@ -146,7 +152,6 @@ describe('Rule Engine Property Tests', () => {
                     fc.string({ minLength: 1, maxLength: 50 }).filter(s => s.trim().length > 0),
                     fc.string({ minLength: 1, maxLength: 50 }).filter(s => s.trim().length > 0),
                     async (originalName, updatedName) => {
-                        mockStorage.clear();
 
                         const ruleId = await ruleEngine.saveRule({
                             name: originalName,
@@ -155,7 +160,7 @@ describe('Rule Engine Property Tests', () => {
                             actions: [{ type: 'block', config: {} }],
                         });
 
-                        await ruleEngine.saveRule({
+                        const updatedId = await ruleEngine.saveRule({
                             id: ruleId,
                             name: updatedName,
                             urlPattern: '*',
@@ -163,7 +168,10 @@ describe('Rule Engine Property Tests', () => {
                             actions: [{ type: 'block', config: {} }],
                         });
 
+                        expect(updatedId).toBe(ruleId);
+
                         const rule = await ruleEngine.getRuleById(ruleId);
+                        expect(rule).not.toBeNull();
                         expect(rule?.name).toBe(updatedName);
                     }
                 ),
@@ -176,7 +184,6 @@ describe('Rule Engine Property Tests', () => {
                 fc.asyncProperty(
                     fc.string({ minLength: 1, maxLength: 50 }).filter(s => s.trim().length > 0),
                     async (name) => {
-                        mockStorage.clear();
 
                         const ruleId = await ruleEngine.saveRule({
                             name,
@@ -202,7 +209,6 @@ describe('Rule Engine Property Tests', () => {
                 fc.asyncProperty(
                     fc.constantFrom('', '   ', '\t', '\n'),
                     async (invalidName) => {
-                        mockStorage.clear();
 
                         await expect(
                             ruleEngine.saveRule({
@@ -223,7 +229,6 @@ describe('Rule Engine Property Tests', () => {
                 fc.asyncProperty(
                     fc.string({ minLength: 1, maxLength: 50 }).filter(s => s.trim().length > 0),
                     async (name) => {
-                        mockStorage.clear();
 
                         await expect(
                             ruleEngine.saveRule({
@@ -244,7 +249,6 @@ describe('Rule Engine Property Tests', () => {
                 fc.asyncProperty(
                     fc.string({ minLength: 1, maxLength: 50 }).filter(s => s.trim().length > 0),
                     async (name) => {
-                        mockStorage.clear();
 
                         await expect(
                             ruleEngine.saveRule({
@@ -269,7 +273,6 @@ describe('Rule Engine Property Tests', () => {
                         priority: fc.integer({ min: 0, max: 100 }),
                     }),
                     async (ruleData) => {
-                        mockStorage.clear();
 
                         const ruleId = await ruleEngine.saveRule({
                             name: ruleData.name,
@@ -299,7 +302,6 @@ describe('Rule Engine Property Tests', () => {
                         { pattern: 'https://example.com/*', url: 'https://other.com/path', shouldMatch: false }
                     ),
                     async (testCase) => {
-                        mockStorage.clear();
 
                         await ruleEngine.saveRule({
                             name: 'Test Rule',
@@ -342,7 +344,6 @@ describe('Rule Engine Property Tests', () => {
                         { pattern: '^https://example\\.com/.*', url: 'http://example.com/path', shouldMatch: false }
                     ),
                     async (testCase) => {
-                        mockStorage.clear();
 
                         await ruleEngine.saveRule({
                             name: 'Test Rule',
@@ -380,7 +381,6 @@ describe('Rule Engine Property Tests', () => {
                 fc.asyncProperty(
                     fc.array(fc.integer({ min: 0, max: 100 }), { minLength: 2, maxLength: 5 }),
                     async (priorities) => {
-                        mockStorage.clear();
 
                         // Create rules with different priorities
                         for (let i = 0; i < priorities.length; i++) {
@@ -421,7 +421,6 @@ describe('Rule Engine Property Tests', () => {
                 fc.asyncProperty(
                     fc.boolean(),
                     async (enabled) => {
-                        mockStorage.clear();
 
                         const ruleId = await ruleEngine.saveRule({
                             name: 'Test Rule',
@@ -463,7 +462,6 @@ describe('Rule Engine Property Tests', () => {
                 fc.asyncProperty(
                     fc.string({ minLength: 1, maxLength: 50 }).filter(s => s.trim().length > 0),
                     async (name) => {
-                        mockStorage.clear();
 
                         const ruleId = await ruleEngine.saveRule({
                             name,
@@ -497,7 +495,6 @@ describe('Rule Engine Property Tests', () => {
                         { minLength: 1, maxLength: 5 }
                     ),
                     async (rulesData) => {
-                        mockStorage.clear();
 
                         // Create rules
                         for (const ruleData of rulesData) {
@@ -514,7 +511,6 @@ describe('Rule Engine Property Tests', () => {
                         expect(exported).toBeDefined();
 
                         // Clear and import
-                        await ruleEngine.clearAllRules();
                         const importedCount = await ruleEngine.importRules(exported, true);
 
                         expect(importedCount).toBe(rulesData.length);

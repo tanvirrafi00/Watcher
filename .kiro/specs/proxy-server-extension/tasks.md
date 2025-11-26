@@ -327,7 +327,7 @@
   - Persist settings in chrome.storage.sync
   - _Requirements: 8.4, 8.5_
 
-- [ ] 24. Add extension icons and branding
+- [x] 24. Add extension icons and branding
   - Create extension icons (16x16, 48x48, 128x128)
   - Add toolbar icon
   - Design extension popup UI
@@ -335,7 +335,7 @@
   - Implement responsive design for different screen sizes
   - _Requirements: All_
 
-- [ ] 25. Implement Chrome extension manifest
+- [x] 25. Implement Chrome extension manifest
   - Create manifest.json with Manifest V3 format
   - Declare required permissions (webRequest, webRequestBlocking, declarativeNetRequest, storage, tabs, <all_urls>)
   - Configure background service worker
@@ -344,7 +344,7 @@
   - Add content security policy
   - _Requirements: All_
 
-- [ ] 26. Final Checkpoint - Ensure all tests pass
+- [-] 26. Final Checkpoint - Ensure all tests pass
   - Ensure all tests pass, ask the user if questions arise.
 
 - [ ] 27. Build and package extension

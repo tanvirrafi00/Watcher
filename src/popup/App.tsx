@@ -44,16 +44,22 @@ const AppContent: React.FC = () => {
     }
 
     // Filter by active tab if not showing all tabs
-    const tabFilteredRequests = showAllTabs || !activeTab
-        ? requests
-        : requests.filter(req => req.tabId === activeTab);
+    const tabFilteredRequests = React.useMemo(() => {
+        return showAllTabs || !activeTab
+            ? requests
+            : requests.filter(req => req.tabId === activeTab);
+    }, [showAllTabs, activeTab, requests]);
 
-    const filteredRequests = filterLogs(tabFilteredRequests, filter);
+    const filteredRequests = React.useMemo(() => {
+        return filterLogs(tabFilteredRequests, filter);
+    }, [tabFilteredRequests, filter]);
 
     // Filter WebSockets by active tab
-    const tabFilteredWebSockets = showAllTabs || !activeTab
-        ? webSockets
-        : webSockets.filter(ws => ws.tabId === activeTab);
+    const tabFilteredWebSockets = React.useMemo(() => {
+        return showAllTabs || !activeTab
+            ? webSockets
+            : webSockets.filter(ws => ws.tabId === activeTab);
+    }, [showAllTabs, activeTab, webSockets]);
 
     // Calculate bandwidth
     const bandwidth = React.useMemo(() => {

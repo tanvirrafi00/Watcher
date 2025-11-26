@@ -64,7 +64,7 @@ export class TrafficModificationEngine {
     /**
      * Creates a redirect response
      */
-    createRedirect(url: string, action: RuleAction): chrome.webRequest.BlockingResponse {
+    createRedirect(_url: string, action: RuleAction): chrome.webRequest.BlockingResponse {
         if (action.type !== 'redirect' || !action.config.redirectUrl) {
             throw new Error('Invalid redirect action');
         }

@@ -30,11 +30,21 @@ async function handleMessage(message: Message): Promise<any> {
     console.log('Background: Received message', message.type);
 
     switch (message.type) {
+        case MessageType.GET_RULES:
+            // Get all rules
+            const rules = await ruleEngine.getRules();
+            return { rules };
+
+        case MessageType.GET_LOGS:
+            // Get all request logs
+            const logs = await requestInterceptor.getLogs();
+            return { logs };
+
         case MessageType.SAVE_RULE:
             // Save rule and update mock rules if needed
             const ruleId = await ruleEngine.saveRule(message.payload);
-            const rules = await ruleEngine.getRules();
-            await mockResponseManager.registerMockRules(rules);
+            const updatedRules = await ruleEngine.getRules();
+            await mockResponseManager.registerMockRules(updatedRules);
             // Notify that rules have been updated
             await notifyRuleUpdate();
             return { ruleId };
@@ -50,8 +60,8 @@ async function handleMessage(message: Message): Promise<any> {
         case MessageType.TOGGLE_RULE:
             // Toggle rule and update mock rules
             await ruleEngine.toggleRule(message.payload.ruleId, message.payload.enabled);
-            const updatedRules = await ruleEngine.getRules();
-            await mockResponseManager.registerMockRules(updatedRules);
+            const toggledRules = await ruleEngine.getRules();
+            await mockResponseManager.registerMockRules(toggledRules);
             // Notify that rules have been updated
             await notifyRuleUpdate();
             return { success: true };

@@ -17,16 +17,17 @@ describe('Storage Manager Property Tests', () => {
     };
 
     let storageManager: StorageManager;
-    let mockStorage: Map<string, any>;
+    const mockStorage: Map<string, any> = new Map();
     let mockBytesInUse: number;
 
     beforeEach(() => {
+        jest.clearAllMocks();
         storageManager = new StorageManager();
-        mockStorage = new Map();
+        mockStorage.clear();
         mockBytesInUse = 0;
 
         // Mock chrome.storage.local
-        (global.chrome.storage.local.set as jest.Mock) = jest.fn((items: Record<string, any>) => {
+        (global.chrome.storage.local.set as jest.Mock).mockImplementation((items: Record<string, any>) => {
             Object.entries(items).forEach(([key, value]) => {
                 mockStorage.set(key, value);
                 // Estimate bytes
@@ -35,7 +36,7 @@ describe('Storage Manager Property Tests', () => {
             return Promise.resolve();
         });
 
-        (global.chrome.storage.local.get as jest.Mock) = jest.fn((keys: string | string[] | null) => {
+        (global.chrome.storage.local.get as jest.Mock).mockImplementation((keys: string | string[] | null) => {
             if (keys === null) {
                 const result: Record<string, any> = {};
                 mockStorage.forEach((value, key) => {
@@ -54,7 +55,7 @@ describe('Storage Manager Property Tests', () => {
             return Promise.resolve(result);
         });
 
-        (global.chrome.storage.local.remove as jest.Mock) = jest.fn((keys: string | string[]) => {
+        (global.chrome.storage.local.remove as jest.Mock).mockImplementation((keys: string | string[]) => {
             const keyArray = typeof keys === 'string' ? [keys] : keys;
             keyArray.forEach((key) => {
                 if (mockStorage.has(key)) {
@@ -66,13 +67,13 @@ describe('Storage Manager Property Tests', () => {
             return Promise.resolve();
         });
 
-        (global.chrome.storage.local.clear as jest.Mock) = jest.fn(() => {
+        (global.chrome.storage.local.clear as jest.Mock).mockImplementation(() => {
             mockStorage.clear();
             mockBytesInUse = 0;
             return Promise.resolve();
         });
 
-        (global.chrome.storage.local.getBytesInUse as jest.Mock) = jest.fn(() => {
+        (global.chrome.storage.local.getBytesInUse as jest.Mock).mockImplementation(() => {
             return Promise.resolve(mockBytesInUse);
         });
     });
@@ -126,7 +127,7 @@ describe('Storage Manager Property Tests', () => {
                     }),
                     async (key, value) => {
                         // Create fresh storage for this iteration
-                        mockStorage = new Map();
+                        mockStorage.clear();
                         mockBytesInUse = 0;
 
                         await storageManager.save(key, value);

@@ -1,6 +1,7 @@
 import React from 'react';
 import { FixedSizeList as List } from 'react-window';
 import { RequestLog } from '../../shared/types';
+import { formatBytes } from '../../shared/utils';
 import './RequestList.css';
 
 interface RequestListProps {
@@ -29,6 +30,17 @@ const RequestList: React.FC<RequestListProps> = ({ requests, selectedRequest, on
             return `${(duration / 1000).toFixed(2)}s`;
         };
 
+        const calculateRequestSize = (req: RequestLog) => {
+            let size = 0;
+            if (req.requestBody) {
+                size += new Blob([req.requestBody]).size;
+            }
+            if (req.responseBody) {
+                size += new Blob([req.responseBody]).size;
+            }
+            return size;
+        };
+
         return (
             <div
                 style={style}
@@ -44,6 +56,7 @@ const RequestList: React.FC<RequestListProps> = ({ requests, selectedRequest, on
                 </div>
                 <div className="request-domain">{new URL(request.url).hostname}</div>
                 <div className="request-time">{formatDuration(request.timing.duration)}</div>
+                <div className="request-size">{formatBytes(calculateRequestSize(request))}</div>
                 {request.modified && <div className="request-badge">Modified</div>}
             </div>
         );
@@ -66,6 +79,7 @@ const RequestList: React.FC<RequestListProps> = ({ requests, selectedRequest, on
                 <div className="header-url">Path</div>
                 <div className="header-domain">Domain</div>
                 <div className="header-time">Time</div>
+                <div className="header-size">Size</div>
             </div>
             <List
                 height={500}

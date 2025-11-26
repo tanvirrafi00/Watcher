@@ -30,40 +30,60 @@ export class RequestInterceptor {
     }
 
     /**
+     * Get all logged requests
+     */
+    async getLogs() {
+        return await this.requestLogger.getAllLogs();
+    }
+
+    /**
      * Initializes webRequest listeners
      */
     initialize(): void {
         // Listen for requests before they are sent
         chrome.webRequest.onBeforeRequest.addListener(
-            (details) => this.onBeforeRequest(details),
+            (details) => {
+                this.onBeforeRequest(details);
+                return undefined;
+            },
             { urls: ['<all_urls>'] },
             ['requestBody']
         );
 
         // Listen for request headers before sending
         chrome.webRequest.onBeforeSendHeaders.addListener(
-            (details) => this.onBeforeSendHeaders(details),
+            (details) => {
+                this.onBeforeSendHeaders(details);
+                return undefined;
+            },
             { urls: ['<all_urls>'] },
             ['requestHeaders', 'extraHeaders']
         );
 
         // Listen for response headers
         chrome.webRequest.onHeadersReceived.addListener(
-            (details) => this.onHeadersReceived(details),
+            (details) => {
+                this.onHeadersReceived(details);
+                return undefined;
+            },
             { urls: ['<all_urls>'] },
             ['responseHeaders']
         );
 
         // Listen for completed requests
         chrome.webRequest.onCompleted.addListener(
-            (details) => this.onCompleted(details),
+            (details) => {
+                this.onCompleted(details);
+            },
             { urls: ['<all_urls>'] },
             ['responseHeaders']
         );
 
         // Listen for errors
         chrome.webRequest.onErrorOccurred.addListener(
-            (details) => this.onErrorOccurred(details),
+            (details) => {
+                this.onErrorOccurred(details);
+            },
             { urls: ['<all_urls>'] }
         );
 
@@ -106,7 +126,7 @@ export class RequestInterceptor {
                     url: details.url,
                     method: details.method,
                     requestHeaders: {},
-                    requestBody: this.extractRequestBody(details.requestBody),
+                    requestBody: this.extractRequestBody(details.requestBody || undefined),
                     timing: { startTime: details.timeStamp },
                     type: details.type,
                     initiator: details.initiator,
@@ -155,7 +175,7 @@ export class RequestInterceptor {
                 url: details.url,
                 method: details.method,
                 requestHeaders: {},
-                requestBody: this.extractRequestBody(details.requestBody),
+                requestBody: this.extractRequestBody(details.requestBody || undefined),
                 timing: { startTime: details.timeStamp },
                 type: details.type,
                 modified: matchingRules.length > 0,
@@ -247,7 +267,7 @@ export class RequestInterceptor {
     /**
      * Handles completed requests
      */
-    private async onCompleted(details: chrome.webRequest.WebResponseDetails): Promise<void> {
+    private async onCompleted(details: chrome.webRequest.WebResponseCacheDetails): Promise<void> {
         try {
             const pending = this.pendingRequests.get(details.requestId);
             if (!pending) {

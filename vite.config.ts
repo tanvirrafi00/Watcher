@@ -6,6 +6,7 @@ export default defineConfig({
     plugins: [
         react()
     ],
+    base: './',  // Use relative paths
     build: {
         outDir: 'dist',
         rollupOptions: {

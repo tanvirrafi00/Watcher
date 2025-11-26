@@ -227,29 +227,29 @@
   - **Property 10: Filter reset completeness**
   - **Validates: Requirements 4.5**
 
-- [ ] 16. Implement tab-specific traffic filtering
+- [x] 16. Implement tab-specific traffic filtering
   - Get active tab ID using chrome.tabs.query
   - Filter displayed requests by active tab ID
   - Update display when user switches tabs
   - Add "All Tabs" option to view traffic from all tabs
   - _Requirements: 3.5_
 
-- [ ] 16.1 Write property test for tab-specific isolation
+- [x] 16.1 Write property test for tab-specific isolation
   - **Property 7: Tab-specific traffic isolation**
   - **Validates: Requirements 3.5**
 
-- [ ] 17. Implement bandwidth calculation and display
+- [x] 17. Implement bandwidth calculation and display
   - Calculate bandwidth from request/response body sizes
   - Display real-time bandwidth usage in UI
   - Add bandwidth graph or chart (optional)
   - Show total bytes sent/received
   - _Requirements: 3.4_
 
-- [ ] 17.1 Write property test for bandwidth calculation
+- [x] 17.1 Write property test for bandwidth calculation
   - **Property 8: Bandwidth calculation accuracy**
   - **Validates: Requirements 3.4**
 
-- [ ] 18. Implement Rule Editor component
+- [x] 18. Implement Rule Editor component
   - Create RuleEditor component for creating/editing rules
   - Add form fields: name, URL pattern, pattern type (glob/regex)
   - Add action selector (modify headers, redirect, block, mock, delay)
@@ -259,7 +259,7 @@
   - Add rule enable/disable toggle
   - _Requirements: 2.1, 5.1, 5.5_
 
-- [ ] 19. Implement Rule List component
+- [x] 19. Implement Rule List component
   - Create RuleList component to display all rules
   - Show rule name, URL pattern, enabled state, and actions
   - Add edit and delete buttons for each rule
@@ -267,7 +267,7 @@
   - Add "Create New Rule" button
   - _Requirements: 2.1, 5.5_
 
-- [ ] 20. Implement WebSocket connection viewer
+- [x] 20. Implement WebSocket connection viewer
   - Create WebSocketList component to display WebSocket connections
   - Show connection URL, status, and message count
   - Implement connection selection
@@ -276,11 +276,11 @@
   - Add message filtering and search
   - _Requirements: 7.3, 7.4_
 
-- [ ] 20.1 Write property test for WebSocket connection state display
+- [x] 20.1 Write property test for WebSocket connection state display
   - **Property 21: WebSocket connection state display**
   - **Validates: Requirements 7.3**
 
-- [ ] 20.2 Write property test for WebSocket message history
+- [x] 20.2 Write property test for WebSocket message history
   - **Property 22: WebSocket message history**
   - **Validates: Requirements 7.4**
 
